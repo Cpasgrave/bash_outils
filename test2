@@ -1,0 +1,192 @@
+message='brakamouk'
+message2="shiki"
+echo $message $message2 gloups
+echo '$message suite de caractères'
+echo "$message interpolation $message2"
+
+echo $0
+echo $1
+echo ${10} paramètre 10ème
+echo ${#message}
+echo ${message^^}
+
+message3='ToRPuGa'
+echo ${message3,,}
+
+echo ${message/ka/oui}
+
+echo ${message:4:2}
+
+un=1
+deux=2
+echo $un+$deux
+echo $(($un+$deux))
+
+let quatre=$un+$un+$deux
+echo $quatre
+echo $# paramètres
+echo $@ liste des paramètres
+echo $* chaîne unique
+
+$((14/0))
+echo $?
+
+machin='truc'
+echo `test $machin = 'troc'` $? test
+echo `test $machin = 'truc'` $? test
+echo `[ $machin = 'troc' ]` $? crochets
+echo `[ $machin = 'truc' ]` $? crochets
+
+[ -e /etc/hosts ]; echo $?
+# commentaire ?
+[[ $machin = 'trouc' && -e /etc/hosts ]]; echo $? opérateur booléen
+
+if [ $machin = 'trac' ]
+then 
+	echo braldi
+	echo karlou
+elif [ -e /etc/marpaloup ]
+then
+	echo "oups"
+else
+	echo résultat_du_test $?
+	echo bargou
+	echo klardi
+fi
+
+
+echo case 
+
+rem="da"
+
+case $rem in 
+	'oui' | 'dal')
+		echo haha
+		echo voilà
+		;;
+	n*)
+		echo ...
+		;;
+	d*)
+		echo $rem commence par d
+		;;
+	*)
+		echo étoile
+		;;
+esac
+
+echo liste
+
+liste=(tri tra trou)
+echo $liste
+echo ${liste[2]}
+liste[2]=prou
+echo ${liste[2]}
+echo ${liste[*]} -> tri tra prou
+
+
+declare -a var
+var[0]=5
+echo ${var[*]}
+bar[3]=7
+bar[0]=8
+echo ${bar[*]}
+
+liste=(tri tra trou tre trol mip)
+for t in ${liste[*]}; do
+	printf "mon bourbik est un %15s\n" $t
+done
+
+for t in ${liste[*]}; do
+	printf "mon bourbik est un %-s\n" $t
+done
+
+for t in ${liste[*]}; do
+	if [[ $t =~ ^[m].* ]]; then
+		printf "mon bourbik est un %-s\n" $t
+	fi
+done
+
+# internal fields separator
+IFS=$'\n'
+
+for nom in $(cat noms); do
+	echo $nom
+done
+
+for argument in $*; do
+	printf "%-2s" $argument
+done
+
+echo
+for i in {1..18}; do
+	printf "%-1s" $i
+done
+echo
+
+echo le for classique
+tralala=(6 55 18 4 7 12)
+for ((i=0 ; i < ${#tralala[*]} ; i++ )); do
+	echo $i "${tralala[i]}"
+done
+
+while read nom; do
+	printf "Mon nom est %12s\n" $nom
+done <noms
+
+f()
+	{	
+		liliste=()
+		while read nom; do
+			liliste+=($nom)
+		done < noms
+		echo "${liliste[*]}"
+		return 0
+	}
+echo fonction f
+f
+
+g()
+	{	
+		bloc=()
+		while read e; do
+			bloc+=($e)
+		done < elements
+		printf "${bloc[*]}"
+		return 0
+	}
+echo fonction g
+g
+echo il manque la dernière ligne, à cause de l\'IFS
+
+g()
+    {    
+        bloc=()
+        while IFS= read -r e || [[ -n "$e" ]]; do
+            bloc+=("$e")
+        done < elements
+        printf "%s\n" "${bloc[@]}"
+        return 0
+    }
+g
+echo et là ça roule
+
+h()
+{
+    box=""
+    while read e; do
+        box+="${e}|"
+    done < <(tr -d '\r' < elements)
+    echo ${box%?}
+    echo ${box::-1}
+    return 0
+}
+echo fonction h
+h
+liste=$(h)
+IFS='|' read -r -a lalala <<< $liste
+echo ${lalala[*]} ${#lalala[*]}
+for c in ${lalala[*]}; do
+	echo "le boutri koubri est $c"
+done
+

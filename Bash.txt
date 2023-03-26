@@ -1,0 +1,544 @@
+HELP : 
+	pour n'importe quelle commande d'un terminal, si on ne sait pas comment l'utiliser, on peut faire :
+	commande --help
+		ça nous donnera la liste des options possible et la syntaxe à utiliser.
+	il y a aussi "man", qui s'utilise comme ça:
+		man commande
+	mais il ne marche que sur linux, pas avec gitbash sur windows
+
+TAB !
+	Ne pas oublier de l'utiliser pour l'auto-complétion, ça fait gagner du temps
+	Quand il y a plusieurs choix, on appuie encore sur tab
+
+copier :
+	ctrl + ins
+
+coller :
+	shift + ins
+
+Ctrl :
+	ctrl + a -> place le curseur au début de la ligne
+	ctrl + e -> place le curseur à la fin de la ligne
+	ctrl + c -> quitte la ligne ou l'exécution, si on est coincé
+	Ctrl + K ->	Efface du curseur à la fin de la ligne
+	Ctrl + U ->	Efface la ligne jusqu'au curseur. Efface donc la ligne si le curseur se trouve à la fin
+	Ctrl + L ->	Efface le terminal, équivalent de clear
+	Ctrl + W ->	Effacer du caractère précédent le curseur jusqu'au début du mot
+	Ctrl + Y -> Colle la sélection précédemment coupée
+	Ctrl + T -> Inverse les deux caractères précédent le curseur
+
+Alt
+	Alt + ←	-> Comme Ctrl+W
+	Alt + D	-> Coupe la chaîne depuis le caractère situé sous le curseur jusqu’à la findu mot (si le curseur est placé au début d’un mot, coupe le mot)
+	Alt + T	-> Inverse deux mots précédent le curseur
+	Alt + C	-> Met en majuscule la lettre située sous le curseur et déplace le curseur à la fin du mot
+	Alt + L	-> Met en minuscule toutes les lettres depuis la position du curseur jusqu’à la fin du mot
+	Alt + U	-> Met en majuscule toutes les lettres depuis la position du curseur jusqu’à la fin du mot
+	Alt + _	-> Annule la modification précédente
+
+Pour arrêter les processus python en cours de fonctionnement :
+	taskkill /f /im python.exe
+
+Nettoyer l'écran du terminal :
+	clear
+
+envoyer plusieurs commandes sur une même ligne :
+	commande1 ; commande2 ; commande3 ; etc
+
+changer de dossier :
+	cd dir_relative_path
+	cd .. pour remonter au dossier parent
+
+home:
+	il y a un dossier racine d'utilisateur, sur windows : /c/Users/User_name
+	cd ~ (répertoire d'accueil du propriétaire du shell)
+	cd ~user_name (répertoire d'accueil de l'utilisateur)
+	cd (comme précédent)
+
+et / ou :
+	commande1 && commande2
+	commande1 || commande2
+	ex :
+		apt-get update && apt-get upgrade (mettre à jour apt-get)
+		ls /usr/tmp/coucou || touch /usr/tmp/coucou (voir ce qui est dans le dossier ou le créer s'il n'existe pas)
+
+afficher les fichiers et dossiers présents :
+	ls
+	ls -a (affiche aussi les fichiers cachés)
+	ll (équivalent de ls -l, l pour long)
+	-> affiche les détails des fichiers présents
+	par défaut utilisé en local, mais on peut afficher un chemin (path)
+		ls -la /usr/bin (-la cumule les otions -l et -a, syntaxe générale dans le bash)
+
+lire le contenu d'un fichier :
+	cat filename
+	less filename (permet de défiler le contenu page par page, et de circuler dedans)
+		espace pour page suivante
+		b pour page précédente
+		q pour quitter
+	head filename (lit les 10 premières lignes du fichier, utile avec un fichier lourd)
+	tail filename (lit les 10 dernières lignes)
+
+compter les lignes, les mots, les caractères d'un fichier
+	wc filename
+	options :
+		-l : nombre de lignes seulement
+		-w : nombre de mots uniquement
+		-m : nombre de caractères et c'est tout
+
+creation d'un dossier : 
+	mkdir dir_name
+
+creation d'un fichier :
+	touch file_name
+
+effacement d'un fichier : 
+	rm file_name
+
+effacement d'un dossier : 
+	rm -rf dir_name (-r pour récursif, car efface aussi le contenu)
+	rmdir (dossier vide) dir_name
+
+copier un fichier :
+	cp file_name copy_name
+
+copier un dossier :
+	cp -r dir_name copy_name
+
+renommer fichier ou dossier :
+	mv dir_name new_name
+	mv file_name new_name
+
+déplacer fichier ou dossier :
+	mv file_name new/path/
+	mv dir_name new/path/
+
+rechercher un fichier ou dossier :
+	locate filename (ne marche pas sur windows avec gitbash, mais on peut l'ajouter en suivant ce qui est décrit ici: https://stackoverflow.com/questions/36841241/can-i-get-the-locate-to-work-on-windows-through-git-bash et ça vaut le coup car tellement plus rapide que les recherches windows)
+	locate [OPTION] PATTERN...
+	locate file_name | less (pour plus de lisibilité)
+	locate *.txt (pour trouver tous les fichiers txt)
+	locate -n 10 *.py (pour limiter la recherche à 10 résultats)
+	locate [-d path | --database=path] [-e | -E | --[non-]existing]
+      [-i | --ignore-case] [-w | --wholename] [-b | --basename]
+      [--limit=N | -l N] [-S | --statistics] [-0 | --null] [-c | --count]
+      [-P | -H | --nofollow] [-L | --follow] [-m | --mmap] [-s | --stdio]
+      [-A | --all] [-p | --print] [-r | --regex] [--regextype=TYPE]
+      [--max-database-age D] [--version] [--help]
+      pattern...
+
+créer une commande 
+	alias tree='tree.com //a ' (à partir de là, on peut utiliser tree <file_name>, comme dans PowerShell)
+
+transférer le résultat des commandes : 
+	ça s'appelle la redirection du standard output ou — redirect stdout
+	> : c'est une commande de transfert, qui envoie le résultat de quelque chose dans la direction de la flèche
+	< : marche donc dans l'autre sens.
+	De nombreux usages selon contexte
+	echo "tout ce que je veux écrire" > mon_fichier (crée le fichier et écrit la phrase à l'intérieur)
+
+| — Pipe :
+	pipe ça veut dire tuyau, ça sert à passer le résultat d'une commande comme input d'une autre commande
+	exemple:
+		ls -l | wc (va compter le nombre de lignes, mots, carctères de l'affichage long des fichiers locaux)
+	à noter que le pipe fonctionne en fifo
+	la suite ici : https://debian-facile.org/doc:programmation:shell:pipe
+
+argument dynamique :
+	syntaxe : $( commande )
+	exemple :
+		echo "ici c'est" "$(pwd)" "et voilà" 
+
+echo $0 
+	-> pour connaître le language du terminal
+
+pwd
+	-> print working directory
+
+python -c 'import module; module.function()'
+	-> pour executer une fonction contenue dans un script python:
+
+
+echo blablabla > filename
+	-> crée un fichier filename et écrit blablabla dedans
+	- par exemple :
+	 echo "print('astarojna dvieri zakrivayoutsa')" > test.py
+
+chmod u+x filename
+chmod a+x filename
+	-> attention, sur linux seulement.
+	chmod = change mode, pour modifier les permissions sur les fichiers.
+	ici, u+x permet l'exécution par l'utilisateur (x pour exécution)
+	a+x permet l'exécution par tout le monde
+
+echo $PATH
+	-> permet de voir le PATH
+
+./scriptname
+	-> pour exécuter un script qui se trouve en local, quelque soit son nom.
+	-> . scriptname marche aussi (je ne saisis pas bien la différence)
+	gpt4 nous explique : 
+		1. ". filename" : exécute le fichier dans le contexte du shell actuel. Cela signifie que les variables, fonctions et autres éléments définis dans le fichier sont accessibles dans le shell actuel après l'exécution. Cette commande est équivalente à "source filename".
+		2. "./filename" : exécute le fichier dans un nouveau processus, séparé du shell actuel. Les variables, fonctions et autres éléments définis dans le fichier ne sont pas accessibles dans le shell actuel après l'exécution. Pour utiliser cette commande, le fichier doit avoir les permissions d'exécution.
+
+whereis bash
+	-> donne la localisation d'un exécutable (linux)
+where bash
+	-> idem (windows)
+
+exit
+	-> fait sortir du présent dossier et ferme le terminal, arrête l'exécution d'un script et déconnecte d'une connection SSH par exemple
+
+lancer une commande en tache de fond :
+	commande & (la commande va être exécutée en tache de fond tout en nous laissant continuer à utiliser le terminal)
+	on peut ensuite voir les commandes en cours d'exécution en tapant "jobs", qui nous donne les commandes en cours d'exécution avec des numéros,
+	qu'ont peut arrêter avec "kill"
+	plus de détails ici -> https://www.maketecheasier.com/run-bash-commands-background-linux/
+
+history
+ 	-> affiche les commandes précédentes, listées avec des numéros
+
+LE SHEBANG :
+
+	au début d'un fichier, ajouter une ligne commençant par "#!" # pour she et ! pour bang
+	suivie du chemin d'accès à l'interptéteur du fichier, permet au bash de savoir comment 
+	et par quoi le fichier doit être lu.
+	ex: 
+	#! C:\Users\Chantal\AppData\Local\Programs\Python\Python311\python.exe
+	#! /usr/bin/bash
+
+
+VARIABLES :
+
+	création d'une variable: en utilisant "=" collé
+	test="voilà"
+	puis pour l'utiliser, avec $
+	echo $test
+	on peut faire une déclaration mais pas nécessaire : 
+	declare var
+	var=5
+	declare -a var -> déclare var comme étant une liste (a pour array)
+
+CHAINES DE CARACTÈRES
+
+	message='brakamouk'
+	message2="shiki"
+	echo $message $message2 gloups 			-> brakamouk shiki gloups
+	echo '$message suite de caractères' 	-> $message suite de caractères
+	echo "$message interpolation $message2" -> brakamouk interpolation shiki
+
+	$0 représente le script lui-même, le nom de l'exéuctable
+	si la variable n'existe pas, il n'y aura pas d'erreur, juste un vide dans l'exécution
+
+	echappement : "\"
+	echo "voilà \$lala" -> voilà $lala
+	echo "${message}motcollé voilà" -> brakamoukmotcollé voilà
+
+	fonctions:
+	# donne la longeur de la chaîne correspondant à la variable
+	echo ${#message} -> 9
+
+	^^ renvoie la chaîne en majuscules
+	echo ${message^^} -> BRAKAMOUK
+
+	,, renvoie la chaîne en minuscules
+	message3='ToRPuGa'
+	echo ${message3,,} -> torpuga
+
+	remplacement :
+	echo ${message/a/oui} -> brouikamouk
+		remplace la première occurence de ce qui est après le premier slash par ce qui est après le deuxième
+
+	slicing :
+	echo ${message:4:2} -> am (de la position 4 à 4+2)
+
+	grep :
+		rechercher des patterns dans des chaînes de caractères, des textes.
+		Syntax: grep [option(s)] pattern [file(s)]
+		Common options: -i, -c, -n
+		option :
+			-v : invert match (affiche les lignes dans lesquelles le pattern n'est pas présent)
+				grep -v pattern file_name
+			-r : recursif (va chercher dans tous les fichiers contenus ds le dossier et les sous-dossiers)
+				grep -r pattern dir_name
+			-i : case insensitive
+				grep -i pattern file_name
+
+CALCUL :
+	un=1
+	deux=2
+	echo $un+$deux -> 1+2
+	echo $(($un+$deux)) -> 3, la double parenthèse précédée d'un $ force le calcul
+	trois=$(($un+$deux))
+	echo trois -> 3
+	aussi : 
+	let trois=$un+$deux
+	echo trois -> 3
+
+
+COMMENTAIRE :
+	# tout ce qui est après le dièse est commenté
+
+PARAMÈTRES :
+	$0 -> nom du script
+	$1 -> premier paramètre
+	$9 -> 9ème paramètre
+	$10 -> premier paramètre et 0
+	=> ${10} -> 10ème paramètre
+	$# -> nombre de paramètres
+	$@ -> liste des paramètres
+	$* -> tous les paramètres dans une seule chaîne de caractères
+	shift -> enlève le premier paramètre, le second devenant le premier
+	shift n -> enlève les n premiers paramètres...
+
+CONDITIONS, FOURCHES :
+	les valeurs de retour sont testées:
+	$? permet de tester la valeur de retour précédente
+	par défaut : 0
+	si problème : 1
+	exemple : 
+		$((1/0))
+		echo $? -> 1
+	exemple 2 :
+		machin='truc'
+		test $machin = 'truc' (= avec espace avant et après est un comparateur comme == en python, pas un attributeur, on peut aussi utiliser == avec un espace avant et après)
+		echo $? -> 0
+		test $machin = 'troc' 
+		echo $? -> 1
+		echo `test $machin = 'trac'`  (les guillemets inversés alt+gr+7 servent à encadrer une commande à effectuer en premier) -> rien, c'est juste un test effectué
+		équivalent à :
+		echo [ $machin = 'troc' ]  (les crochets font la même chose que test)
+		mais on peut faire :
+		echo [ $machin = 'troc' ] $? -> 1
+	les autres comparateurs:
+	< <= > >= != : ce sont des comparateurs de chaînes de caractères, et d'entiers si on utilise (( ))
+	pour les comparateurs d'entiers:
+	https://abs.traduc.org/abs-fr/ch07s03.html
+
+	les tests:
+		-f pour vérifier si un fichier existe
+			[ -f /etc/host ]; echo $?
+		-e fichier existe quelque soit le fichier, peut être périphérique
+		-s fichier existe et sa taille est > 0, ce n'est pas un fichier vide
+		-d c'est un répertoire qui existe
+		-h c'est un fichier lien symbolique
+		-w est-ce que l'autorisation d'écrire sur le fichier est active
+		-x est-ce que le fichier est exécutable par l'utilisateur
+		
+
+	Opérateurs booléens : 
+	[ $machin != 'trac'] (condition 1)
+	[ -x /etc/hosts ] (condition 2)
+	[[ $machin = 'truc' && -e /etc/hosts ]] (et)
+	[[ $machin = 'truc' || -e /etc/hosts ]] (ou)
+
+	IF :
+
+		if [ $machin != 'truc']
+		then 
+			echo braldi
+			echo karlou
+		fi
+
+	ELIF :
+
+		if [ $machin = 'trac' ]
+		then 
+			echo braldi
+			echo karlou
+		elif [ -e /etc/marpaloup ]
+		then
+			echo "oups"
+		else
+			echo résultat_du_test $?
+			echo bargou
+			echo klardi
+		fi
+
+	CASE :
+
+		rem="da"
+
+		case $rem in
+			'oui' | 'dal')
+			# ici le 'or' est une barre unique
+				echo haha
+				echo voilà
+				;;
+			n*)
+				echo ...
+				;;
+			d*)
+				echo $rem commence par d
+				;;
+			*)
+				echo étoile
+				;;
+		esac
+
+LISTES :
+
+	liste=(tri tra trou)
+	echo $liste -> va retourner le premier élément : tri
+	echo ${liste[2]} -> trou
+	liste[2]=prou
+	echo ${liste[2]} -> prou
+	echo ${liste[*]}
+	declare -a var (cette ligne est facultative, la suivante crée automatiquement une liste)
+	var[0]=5
+
+
+BOUCLE FOR
+
+	liste=(tri tra trou tre trol mip)
+	for t in ${liste[*]}; do
+		printf "mon bourbik est un %-15s\n" $t
+	done
+
+	mot est un fichier avec plusieurs lignes
+	for nom in ${cat noms}; do
+		printf nom
+	done
+	attention, cette methode imprime tous les mots, il y aura 3 itérations sur une ligne comprenant 3 mots.
+
+	pour écrire chaque ligne séparément :
+	# internal fields separator
+	IFS=$'\n'
+	for nom in ${cat noms}; do
+		printf nom
+	done
+
+	for argument in $*; do
+		printf "%-2s" $argument
+	done
+
+	for i in {1..8}; do
+		printf "%-1s" $i
+	done
+	# -> 123456789101112131415161718
+
+	il y a aussi le for classique comme en C, java, javascript :
+	tralala=(6 55 18 4 7 12)
+	for ((i=0 ; i < ${#tralala[*]} ; i++ )); do
+		echo $i "${tralala[i]}"
+	done
+
+
+BOUCLE WHILE :
+
+	while read nom
+	do
+		printf "Mon nom est %12s\n" $nom
+	done <noms
+	< est là pour effectuer une redirection depuis un fichier
+	> enverrait vers le fichier
+
+INTERNAL FIELDS SEPARATOR
+	
+	c'est le séparateur de champs, ce qui sert à délimiter les éléments qu'on veut considérer comme séparés lors de la lecture d'un fichier ou d'une chaîne de caractères
+	IFS=$'\n'
+
+PRINTF
+
+	Au contraire d'echo, printf n'ajoute pas systématiquement de saut de ligne à la fin, il faut l'ajouter si on le veut.
+	
+	%20s		Affichage d'une chaine (string) sur 20 positions avec cadrage à droite
+	%-20s		Affichage d'une chaine (string) sur 20 positions avec cadrage à gauche
+	%3d			Affichage d'un entier (décimal) sur 3 positions avec cadrage à droite
+	%03d		Affichage d'un entier (décimal) sur 3 positions avec cadrage à droite et complété avec des 0 à gauche
+	%-3d		Affichage d'un entier (décimal) sur 3 positions avec cadrage à gauche
+	%+3d		Affichage d'un entier (décimal) sur 3 positions avec cadrage à droite et affichage systématique du signe (un nombre négatif est toujours affiché avec son signe)
+	%10.2f		Affichage d'un nombre flottant sur 10 positions dont 2 décimales
+	%+010.2f	Affichage d'un nombre flottant sur 10 positions dont 2 décimales, complété par des 0 à gauche, avec cadrage à droite et affichage systématique du signe
+
+FONCTIONS
+	
+	limite des fonctions en bash : elles ne renvoient qu'un statut de réussite : 0 pour réussi, 1 pour problème
+	déclaration :
+	f()
+	{
+		return 0
+	}
+	exécution de la fonction sans parenthèses, ni arguments :
+	f
+
+	mais on peut effectuer des "echo" pendant l'exécution de la fonction :
+
+	f()
+	{	
+		liliste=()
+		while read nom; do
+			liliste+=($nom)
+		done < noms
+		echo "${liste[*]}"
+		# attention ici, les guillemets sont nécéssaires, j'ai pas bien compris pourquoi ...
+		return 0
+	}
+	En faisant printf à la place d'echo, il faut faire attention à l'IFS :
+	
+	g()
+	{	
+		bloc=()
+		while read e; do
+			bloc+=($e)
+		done < elements
+		printf "${bloc[*]}"
+		return 0
+	}
+	echo fonction g
+	g
+	Dans ce cas, le dernier élément ne sera pas printé, parce qu'il a été rentré dans la liste sans IFS après lui (newline)
+	Mais on peut y remédier : 
+	g()
+    {    
+        bloc=()
+        while IFS= read -r e || [[ -n "$e" ]]; do
+            bloc+=("$e")
+        done < elements
+        printf "%s\n" "${bloc[@]}"
+        return 0
+    }
+	g
+	Les explications de GPT4 :
+	1. `IFS= read -r e`: This part of the condition reads a line from the input file and stores it in the variable `e`. 
+	The `IFS=` part sets the Internal Field Separator (IFS) to an empty value, which prevents leading and trailing whitespaces from being trimmed. 
+	The `-r` option tells `read` not to interpret backslashes as escape characters.
+
+	2. `|| [[ -n "$e" ]]`: This part of the condition is an OR operator (`||`) followed by a test that checks if the variable `e` is non-empty (`-n "$e"`). This test ensures that the loop continues to process the last line even if the `read` command returns a non-zero exit status due to the absence of a newline character.
+
+	When the while loop encounters the last line without a newline character, the `read` command will return a non-zero exit status, but the loop will continue to process the line because the `[[ -n "$e" ]]` condition is true (the variable `e` is non-empty). This ensures that the last line is included in the `bloc` array and printed by the script.
+
+	Récupérer les résultats envoyés par echo depuis la fonction.
+	Le souci, c'est qu'il n'y a pas vraiment d'objets comme la liste en bash, qui travaille plutôt avec des chaînes de caractères.
+	Donc pour faire propre, on va ajouter nos délimiteurs (ici : "|") et ensuite splitter dessus :
+	h()
+	{
+	    box=""
+	    while read e; do
+	        box+="${e}|"
+	    done < <(tr -d '\r' < elements)
+    	# ligne précédente : sur windows, le souci vient des sauts de lignes qui sont des \r\n, alors que sur linux ce sont des \n
+	    echo ${box%?}
+	    # %? permet d'enlever le dernier caractère qui serait un "|"
+	    # on pourrait aussi faire : 
+	    # echo ${box::-1}
+	    return 0
+	}
+	echo fonction h
+	h
+	# ensuite on récupère la suite de caractère et on splite sur '|' pour en faire une liste :
+	liste=$(h)
+	IFS='|' read -r -a lalala <<< $liste
+	echo ${lalala[*]}
+	for c in ${lalala[*]}; do
+		echo "le boutri-koubri est $c"
+
+
+Téléchargement 
+	curl [option] adresse_web
+	exemple :
+		curl -L google.com (va juste l'afficher dans le terminal)
+		curl -L google.com > gog (va écrire le contenu dans un fichier nommé gog)
+	plus de détails ici :
+		https://www.malekal.com/16-exemples-utilisation-de-la-commande-curl/
+
