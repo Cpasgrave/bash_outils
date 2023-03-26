@@ -248,9 +248,13 @@ CHAINES DE CARACTÈRES
 	remplacement :
 	echo ${message/a/oui} -> brouikamouk
 		remplace la première occurence de ce qui est après le premier slash par ce qui est après le deuxième
-
-	slicing :
-	echo ${message:4:2} -> am (de la position 4 à 4+2)
+	a="abc123456789def"
+	echo ${a:2} -> c123456789def
+	pos=5
+	echo ${a:$pos} -> 3456789def
+	echo ${a:3:7} -> 1234567
+	beaucoup d'autres actions possibles sur les chaînes de caractères, par ex ici:
+		https://abs.traduc.org/abs-5.0-fr/ch09s02.html
 
 	grep :
 		rechercher des patterns dans des chaînes de caractères, des textes.
@@ -421,6 +425,12 @@ BOUCLE FOR
 	tralala=(6 55 18 4 7 12)
 	for ((i=0 ; i < ${#tralala[*]} ; i++ )); do
 		echo $i "${tralala[i]}"
+	done
+
+Application, parcourir les fichiers d'un répertoire :
+	
+	for f in $(ls ./*); do
+		echo "$f"
 	done
 
 

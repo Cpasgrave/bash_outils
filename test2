@@ -130,6 +130,11 @@ for ((i=0 ; i < ${#tralala[*]} ; i++ )); do
 	echo $i "${tralala[i]}"
 done
 
+echo parcourir les fichiers
+for f in $(ls *); do
+	echo "$f"
+done
+
 while read nom; do
 	printf "Mon nom est %12s\n" $nom
 done <noms
